@@ -17,21 +17,20 @@
 
 
 nx-cam-automation/
-├── src/
-│   └── nx_cam_engine.py      # 核心引擎：创建刀具、创建工序、批量运行
-├── config/
-│   └── example_config.py     # 示例配置（替换为你自己工厂的数据）
-├── web/
-│   ├── index.html            # Web 前端入口（汉化版）
+├── src/                      # 核心代码目录
+│   └── nx_cam_engine.py      # NX CAM 自动化核心引擎
+├── config/                   # 配置目录
+│   └── example_config.py     # 示例配置（替换为你自己工厂的刀具/工艺）
+├── web/                      # Web 前端（汉化版）
+│   ├── index.html            # 前端入口，全中文界面
 │   ├── style.css             # 样式
-│   └── app.js                # 数据渲染、脚本生成逻辑
-├── docs/
-│   └── NX12_CAM_API_参考.md   # NX CAM API 参考文档
-├── tests/
-│   └── test_mill_api.py      # 调试脚本：测试你的 NX 版本的铣刀 API
+│   └── app.js                # 数据渲染和脚本生成逻辑
+├── docs/                     # 文档目录
+│   └── NX12_CAM_API_参考.md  # NX CAM API 中文参考文档
+├── tests/                    # 调试脚本
+│   └── test_mill_api.py      # 调试 NX 铣刀 API
 ├── run_nx_cam.py             # 快速启动脚本
-└── README.md
-`
+└── README.md                 # 中文使用说明文档
 
 ## 使用指南
 
