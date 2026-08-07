@@ -1,10 +1,11 @@
-﻿# NX CAM 自动化
+# NX CAM 自动化
 
 一个可重用的西门子 NX CAM 自动化框架。定义你的刀具和工艺组合，生成可直接运行的 Python 脚本，自动在 NX 中创建所有刀具和操作。
 
 ## 功能特性
 
 代替手动点击 NX 创建刀具、设置转速进给、配置工序：
+
 1. 在浏览器打开 web/index.html
 2. 配置你的刀具和工艺组合（或导入 JSON 配置）
 3. 调整参数（直径、转速、深度等）
@@ -15,7 +16,7 @@
 
 ## 项目结构
 
-`
+```
 nx-cam-automation/
 ├── src/
 │   └── nx_cam_engine.py      # 核心引擎：创建刀具、创建工序、批量运行
@@ -31,7 +32,7 @@ nx-cam-automation/
 │   └── test_mill_api.py      # 调试脚本：测试你的 NX 版本的铣刀 API
 ├── run_nx_cam.py             # 快速启动脚本
 └── README.md
-`
+```
 
 ## 使用指南
 
@@ -41,7 +42,7 @@ nx-cam-automation/
 
 ### 直接用 NX 脚本
 
-1. 编辑 un_nx_cam.py 或创建你的配置
+1. 编辑 run_nx_cam.py 或创建你的配置
 2. 复制到工厂电脑
 3. 在 NX 里按 Ctrl+U，选择 .py 文件运行
 4. 窗口输出进度
@@ -55,21 +56,21 @@ nx-cam-automation/
 
 ## 支持的工序类型
 
-| 类型           | 说明               |
-|----------------|--------------------|
-| spot_drill   | 中心钻/点窝         |
-| drill        | 标准钻孔           |
-| peck_drill   | 深孔啄钻           |
-| chamfer      | 倒角/去毛刺         |
-| ace_mill    | 面铣               |
-| planar_mill  | 平面铣             |
-| cavity_mill  | 型腔铣             |
-| zlevel       | 等高轮廓铣         |
+| 类型         | 说明         |
+|--------------|--------------|
+| spot_drill   | 中心钻/点窝   |
+| drill        | 标准钻孔     |
+| peck_drill   | 深孔啄钻     |
+| chamfer      | 倒角/去毛刺   |
+| face_mill    | 面铣         |
+| planar_mill  | 平面铣       |
+| cavity_mill  | 型腔铣       |
+| zlevel       | 等高轮廓铣   |
 
 ## NX 注意事项
 
 1. 刀具名只能用 ASCII，不能有中文和斜杠
-2. NX API 查找对象会抛异常，记得用 	ry/except
+2. NX API 查找对象会抛异常，记得用 try/except
 3. 铣刀类型是 mill_planar，不是 mill
 4. 空白零件需先手动进入加工模块，保存后再运行脚本
 5. 脚本运行后，每个工序需要手动指定孔/面
