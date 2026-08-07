@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NX CAM Automation - Script Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-row">
+      <div>
+        <h1>NX CAM Automation</h1>
+        <p class="meta">Configure your tools and process combos, then download ready-to-run Python scripts for Siemens NX 12+</p>
+      </div>
+    </div>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="tabs">
+    <button class="tab active" data-tab="combos" onclick="switchTab('combos')">Process Combos</button>
+    <button class="tab" data-tab="tools" onclick="switchTab('tools')">Tool Library</button>
+    <button class="tab" data-tab="rules" onclick="switchTab('rules')">Settings</button>
+    <button class="tab" data-tab="params" onclick="switchTab('params')">Edit Params</button>
+    <button class="tab" data-tab="script" onclick="switchTab('script')">Script Preview</button>
+  </div>
+  <div id="tab-content"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

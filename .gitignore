@@ -1,0 +1,32 @@
+﻿# NX CAM Automation - .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Factory-specific data (confidential — never commit)
+config/factory_*.json
+config/factory_*.yaml
+*.prt
+*.xls
+*.xlsx
+
+# Backup / temp files
+*_backup.*
+*.bak
