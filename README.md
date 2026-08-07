@@ -15,22 +15,23 @@
 
 ## 项目结构
 
-
+`
 nx-cam-automation/
-├── src/                      # 核心代码目录
-│   └── nx_cam_engine.py      # NX CAM 自动化核心引擎
-├── config/                   # 配置目录
-│   └── example_config.py     # 示例配置（替换为你自己工厂的刀具/工艺）
-├── web/                      # Web 前端（汉化版）
-│   ├── index.html            # 前端入口，全中文界面
+├── src/
+│   └── nx_cam_engine.py      # 核心引擎：创建刀具、创建工序、批量运行
+├── config/
+│   └── example_config.py     # 示例配置（替换为你自己工厂的数据）
+├── web/
+│   ├── index.html            # Web 前端入口（汉化版）
 │   ├── style.css             # 样式
-│   └── app.js                # 数据渲染和脚本生成逻辑
-├── docs/                     # 文档目录
-│   └── NX12_CAM_API_参考.md  # NX CAM API 中文参考文档
-├── tests/                    # 调试脚本
-│   └── test_mill_api.py      # 调试 NX 铣刀 API
+│   └── app.js                # 数据渲染、脚本生成逻辑
+├── docs/
+│   └── NX12_CAM_API_参考.md   # NX CAM API 参考文档
+├── tests/
+│   └── test_mill_api.py      # 调试脚本：测试你的 NX 版本的铣刀 API
 ├── run_nx_cam.py             # 快速启动脚本
-└── README.md                 # 中文使用说明文档
+└── README.md
+`
 
 ## 使用指南
 
@@ -40,8 +41,7 @@ nx-cam-automation/
 
 ### 直接用 NX 脚本
 
-1. 编辑 
-un_nx_cam.py 或创建你的配置
+1. 编辑 un_nx_cam.py 或创建你的配置
 2. 复制到工厂电脑
 3. 在 NX 里按 Ctrl+U，选择 .py 文件运行
 4. 窗口输出进度
@@ -68,9 +68,11 @@ un_nx_cam.py 或创建你的配置
 
 ## NX 注意事项
 
-
-1. 空白零件需先手动进入加工模块，保存后再运行脚本
-2. 脚本运行后，每个工序需要手动指定孔/面
+1. 刀具名只能用 ASCII，不能有中文和斜杠
+2. NX API 查找对象会抛异常，记得用 	ry/except
+3. 铣刀类型是 mill_planar，不是 mill
+4. 空白零件需先手动进入加工模块，保存后再运行脚本
+5. 脚本运行后，每个工序需要手动指定孔/面
 
 ## 许可证
 
