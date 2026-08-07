@@ -15,7 +15,7 @@
 
 ## 项目结构
 
-`
+
 nx-cam-automation/
 ├── src/
 │   └── nx_cam_engine.py      # 核心引擎：创建刀具、创建工序、批量运行
@@ -41,7 +41,8 @@ nx-cam-automation/
 
 ### 直接用 NX 脚本
 
-1. 编辑 un_nx_cam.py 或创建你的配置
+1. 编辑 
+un_nx_cam.py 或创建你的配置
 2. 复制到工厂电脑
 3. 在 NX 里按 Ctrl+U，选择 .py 文件运行
 4. 窗口输出进度
