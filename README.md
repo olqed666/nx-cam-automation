@@ -1,104 +1,79 @@
-﻿# NX CAM Automation
+﻿# NX CAM 自动化
 
-A reusable, open-source automation framework for Siemens NX CAM. Define your tools and process combinations, then generate ready-to-run Python scripts that create all tools and operations in NX automatically.
+一个可重用的西门子 NX CAM 自动化框架。定义你的刀具和工艺组合，生成可直接运行的 Python 脚本，自动在 NX 中创建所有刀具和操作。
 
-## What it does
+## 功能特性
 
-Instead of spending 15 minutes manually clicking in NX to create tools, set speeds/feeds, and configure operations, you:
+代替手动点击 NX 创建刀具、设置转速进给、配置工序：
+1. 在浏览器打开 web/index.html
+2. 配置你的刀具和工艺组合（或导入 JSON 配置）
+3. 调整参数（直径、转速、深度等）
+4. 下载 .py 脚本
+5. 复制到工厂电脑，在 NX 按 Ctrl+U 运行
+6. 脚本自动创建所有刀具和工序
+7. 你只需要双击每个工序，指定孔/面（NX 唯一需要手动的步骤）
 
-1. Open `web/index.html` in a browser
-2. Configure your tools and process combos (or import a JSON config)
-3. Tweak parameters if needed
-4. Download a `.py` script
-5. Run it in NX via `Ctrl+U`
-6. The script creates all tools and operations automatically
-7. You just double-click each operation to assign holes/faces (the one manual step NX requires)
+## 项目结构
 
-## Project structure
-
-```
+`
 nx-cam-automation/
 ├── src/
-│   └── nx_cam_engine.py      # Core engine: tool creation, operation creation, batch runner
+│   └── nx_cam_engine.py      # 核心引擎：创建刀具、创建工序、批量运行
 ├── config/
-│   └── example_config.py     # Example configuration (replace with your own factory data)
+│   └── example_config.py     # 示例配置（替换为你自己工厂的数据）
 ├── web/
-│   ├── index.html            # Web frontend entry point
-│   ├── style.css             # Styles
-│   └── app.js                # Data, rendering, and script generation logic
+│   ├── index.html            # Web 前端入口（汉化版）
+│   ├── style.css             # 样式
+│   └── app.js                # 数据渲染、脚本生成逻辑
 ├── docs/
-│   └── NX12_CAM_API_参考.md   # NX CAM API reference (Chinese)
+│   └── NX12_CAM_API_参考.md   # NX CAM API 参考文档
 ├── tests/
-│   └── test_mill_api.py      # Debug script to test mill tool API on your NX version
-├── run_nx_cam.py             # Quick-start runner (edit config, Ctrl+U in NX)
+│   └── test_mill_api.py      # 调试脚本：测试你的 NX 版本的铣刀 API
+├── run_nx_cam.py             # 快速启动脚本
 └── README.md
-```
+`
 
-## Quick start
+## 使用指南
 
-### Web frontend (recommended)
+### Web 前端（推荐）
 
-```bash
-# Open in any browser
-open web/index.html
-```
+在任意浏览器打开：web/index.html，可视化配置刀具和工艺，一键下载可执行脚本，无需编程。
 
-Configure tools and combos in the UI, download scripts. No install needed.
+### 直接用 NX 脚本
 
-### Direct NX script
+1. 编辑 un_nx_cam.py 或创建你的配置
+2. 复制到工厂电脑
+3. 在 NX 里按 Ctrl+U，选择 .py 文件运行
+4. 窗口输出进度
 
-1. Edit `run_nx_cam.py` or create your own config
-2. Copy to factory PC
-3. In NX: `Ctrl+U` -> select the `.py` file
-4. The Listing Window shows progress
+## 配置格式
 
-## Configuration format
+- 刀具：JSON 结构，定义名称、类型、直径、长度等
+- 工序：定义名称、类型、用哪个刀具、转速、进给、深度
 
-Tools:
-```python
-{"name": "ZDD4",   "type": "drill", "diameter": 4.0,  "flute_length": 4,  "point_angle": 90}
-{"name": "XD10R",  "type": "mill",  "diameter": 10.0, "flute_length": 23, "flutes": 2}
-```
+完整说明见 config/example_config.py。
 
-Operations:
-```python
-{"name": "OP_SPOT",  "op_type": "spot_drill", "tool_name": "ZDD4",  "spindle": 1500, "feed": 150, "depth": -2.0}
-{"name": "OP_DRILL", "op_type": "peck_drill", "tool_name": "ZD5.2", "spindle": 1100, "feed": 150, "depth": -20.0}
-```
+## 支持的工序类型
 
-See `config/example_config.py` and `src/nx_cam_engine.py` for full API docs.
+| 类型           | 说明               |
+|----------------|--------------------|
+| spot_drill   | 中心钻/点窝         |
+| drill        | 标准钻孔           |
+| peck_drill   | 深孔啄钻           |
+| chamfer      | 倒角/去毛刺         |
+| ace_mill    | 面铣               |
+| planar_mill  | 平面铣             |
+| cavity_mill  | 型腔铣             |
+| zlevel       | 等高轮廓铣         |
 
-## Supported operation types
+## NX 注意事项
 
-| op_type       | Description              | NX type        | NX subtype       |
-|---------------|--------------------------|----------------|------------------|
-| `spot_drill`  | Center drill / spot      | `drill`        | `SPOT_DRILLING`  |
-| `drill`       | Standard drill (G81)     | `drill`        | `DRILLING`       |
-| `peck_drill`  | Peck drill (G83)         | `drill`        | `PECK_DRILLING`  |
-| `chamfer`     | Chamfer / deburring      | `drill`        | `DRILLING`       |
-| `face_mill`   | Face milling             | `mill_planar`  | `FACE_MILLING`   |
-| `planar_mill` | Planar milling           | `mill_planar`  | `PLANAR_MILL`    |
-| `cavity_mill` | Cavity milling           | `mill_contour` | `CAVITY_MILL`    |
-| `zlevel`      | Z-level profile          | `mill_contour` | `ZLEVEL_PROFILE` |
+1. 刀具名只能用 ASCII，不能有中文和斜杠
+2. NX API 查找对象会抛异常，记得用 	ry/except
+3. 铣刀类型是 mill_planar，不是 mill
+4. 空白零件需先手动进入加工模块，保存后再运行脚本
+5. 脚本运行后，每个工序需要手动指定孔/面
 
-## Important NX gotchas
-
-1. **Tool names must be ASCII** — no Chinese characters, no slashes. Use `ZDD4` not `中心钻/4`.
-2. **`FindObject` throws, does not return `None`** — always wrap in `try/except`.
-3. **Mill tool type is `mill_planar`**, not `mill`.
-4. **Blank `.prt` files have no CAM environment** — manually enter `Start > Manufacturing > OK` once, then save.
-5. **Operations need manual geometry assignment** — after script runs, double-click each op and assign holes/faces.
-
-## Requirements
-
-- Siemens NX 12.0+ (tested on 12.0.2.9)
-- NXOpen Python API (bundled with NX)
-- No additional Python packages needed (runs inside NX's Python)
-
-## License
+## 许可证
 
 MIT
-
-## Credits
-
-Developed for factory CNC automation. The web frontend and engine are designed to be generic — plug in your own tool library and process combos.
